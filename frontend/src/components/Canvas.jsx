@@ -4,8 +4,6 @@ import {
   MiniMap,
   Controls,
   Background,
-  useNodesState,
-  useEdgesState,
   addEdge,
   ReactFlowProvider,
 } from '@xyflow/react';
@@ -16,24 +14,11 @@ const nodeTypes = {
   custom: CustomNode,
 };
 
-const initialNodes = [
-  {
-    id: '1',
-    type: 'custom',
-    position: { x: 250, y: 150 },
-    data: { label: 'Google Drive Watcher', type: 'trigger', iconType: 'trigger', description: 'Monitor /Invoices folder' },
-  },
-];
-
-const initialEdges = [];
-
 let id = 10;
 const getId = () => `dndnode_${id++}`;
 
-const CanvasFlow = ({ onNodeSelect }) => {
+const CanvasFlow = ({ nodes, edges, onNodesChange, onEdgesChange, setNodes, setEdges, onNodeSelect }) => {
   const reactFlowWrapper = useRef(null);
-  const [nodes, setNodes, onNodesChange] = useNodesState(initialNodes);
-  const [edges, setEdges, onEdgesChange] = useEdgesState(initialEdges);
   const [reactFlowInstance, setReactFlowInstance] = useState(null);
 
   const onConnect = useCallback(
